@@ -1,4 +1,4 @@
-package com.kit.tictactoe;
+package com.kit.tictactoe.cells;
 
 public class CellPosition {
 

@@ -1,6 +1,9 @@
 package com.kit.tictactoe;
 
-import com.sun.javafx.geom.Point2D;
+import com.kit.tictactoe.cells.Cell;
+import com.kit.tictactoe.cells.CellPosition;
+import com.kit.tictactoe.cells.CircleCellState;
+import com.kit.tictactoe.cells.CrossCellState;
 import javafx.event.EventTarget;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,12 +11,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Random;
+
+import static com.kit.tictactoe.Constants.COLS;
+import static com.kit.tictactoe.Constants.ROWS;
 
 public class Game {
-
-    private static final int ROWS = 3;
-    private static final int COLS = 3;
 
     private Board board;
     private String firstPlayerNick;
@@ -29,8 +31,8 @@ public class Game {
         board = new Board(ROWS, COLS);
         board.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
-        player1 = new Player(firstPlayerNick, CellStatesFactory.CROSS_CELL_ID);
-        player2 = new Player(secondPlayerNick, CellStatesFactory.CIRCLE_CELL_ID);
+        player1 = new Player(firstPlayerNick, new CrossCellState());
+        player2 = new Player(secondPlayerNick, new CircleCellState());
 
         playerQueue = new PlayerQueue(new Player[] {player1, player2});
 
@@ -65,14 +67,52 @@ public class Game {
     }
 
     private boolean isGameOver(Cell clickedCell) {
-        // TODO: 14.09.16 Implement me
-        
         CellPosition cellPositionOnBoard = clickedCell.getPositionOnBoard();
 
         int rowPos = cellPositionOnBoard.getRowPosition();
         int colPos = cellPositionOnBoard.getColPosition();
 
-        return rowPos == colPos;
+        boolean isMiddleCell = rowPos == colPos;
+
+        boolean isWinningHorizontal = true;
+
+        for(int colCount = 0; colCount < COLS; colCount++) {
+            Cell currentCellInHorizontal = board.getCellAtPosition(rowPos, colCount);
+            isWinningHorizontal = isWinningHorizontal
+                    && clickedCell.getCurrentCellState().getCellStateId()
+                    == currentCellInHorizontal.getCurrentCellState().getCellStateId();
+        }
+
+        boolean isWinningVertical = true;
+
+        for(int rowCount = 0; rowCount < ROWS; rowCount++) {
+            Cell currentCellInVertical = board.getCellAtPosition(rowCount, colPos);
+            isWinningVertical = isWinningVertical
+                    && clickedCell.getCurrentCellState().getCellStateId()
+                    == currentCellInVertical.getCurrentCellState().getCellStateId();
+        }
+
+        boolean isGameOver = isWinningHorizontal || isWinningVertical;
+
+        if(isMiddleCell) {
+            boolean isWinningDiagonal = true;
+            int cellIndex = 0;
+
+            while(cellIndex < ROWS) {
+                Cell currentCellInDiagonal = board.getCellAtPosition(cellIndex, cellIndex);
+                isWinningDiagonal = isWinningDiagonal
+                        && clickedCell.getCurrentCellState().getCellStateId()
+                        == currentCellInDiagonal.getCurrentCellState().getCellStateId();
+
+                cellIndex++;
+            }
+
+            isGameOver = isGameOver || isWinningDiagonal;
+        }
+
+        System.out.println(isGameOver);
+
+        return isGameOver;
     }
 
     private boolean hasWinner() {

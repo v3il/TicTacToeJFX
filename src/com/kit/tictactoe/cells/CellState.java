@@ -1,11 +1,13 @@
-package com.kit.tictactoe;
+package com.kit.tictactoe.cells;
 
 public class CellState {
 
+    private Integer cellStateId;
     private String labelText;
     private String labelClass;
 
-    public CellState(String labelText, String labelClass) {
+    public CellState(Integer cellStateId, String labelText, String labelClass) {
+        this.cellStateId = cellStateId;
         this.labelText = labelText;
         this.labelClass = labelClass;
     }
@@ -24,5 +26,13 @@ public class CellState {
 
     public void setLabelClass(String labelClass) {
         this.labelClass = labelClass;
+    }
+
+    public int getCellStateId() {
+        return cellStateId;
+    }
+
+    public void setCellStateId(int cellStateId) {
+        this.cellStateId = cellStateId;
     }
 }
