@@ -1,9 +1,8 @@
 package com.kit.tictactoe;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -14,11 +13,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/title_scene_content.fxml"));
-        Scene scene = new Scene(root);
+        Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+
+        primaryStage.setX(primaryScreenBounds.getMinX() + 500);
+        primaryStage.setY(primaryScreenBounds.getMinY() + 250);
 
         primaryStage.setTitle("TicTacToe JavaFX");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(SceneManager.getSceneById(SceneManager.TITLE_SCENE_ID));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 }

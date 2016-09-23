@@ -9,6 +9,7 @@ public class PlayerQueue {
 
     private Player currentPlayer;
     private List<Player> players;
+    private int currentPlayerIndex;
 
     private Random random;
 
@@ -20,6 +21,7 @@ public class PlayerQueue {
     public PlayerQueue(Player[] playersArray) {
         this();
         addPlayers(playersArray);
+        changePlayer();
     }
 
     public void addPlayers(Player[] playersArray) {
@@ -51,10 +53,16 @@ public class PlayerQueue {
         int nextPlayerIndex;
 
         if(currentPlayer == null) {
-            currentPlayer = players.get(random.nextInt(players.size()));
+            nextPlayerIndex = random.nextInt(players.size());
         } else {
             nextPlayerIndex = currentPlayer == players.get(0) ? 1 : 0;
-            currentPlayer = players.get(nextPlayerIndex);
         }
+
+        currentPlayer = players.get(nextPlayerIndex);
+        currentPlayerIndex = nextPlayerIndex;
+    }
+
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
     }
 }

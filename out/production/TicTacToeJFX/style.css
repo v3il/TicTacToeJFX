@@ -33,3 +33,8 @@
     -fx-background-color: #aaa;
     -fx-text-fill: black;
 }
+
+.active-player {
+    -fx-font-weight: bold;
+    -fx-text-fill: darkgreen;
+}

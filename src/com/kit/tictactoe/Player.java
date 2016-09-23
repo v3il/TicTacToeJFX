@@ -19,4 +19,9 @@ public class Player {
     public CellState getPlayerMarkStyleId() {
         return playerMarkStyle;
     }
+
+    @Override
+    public String toString() {
+        return nickname + " (" + playerMarkStyle.getLabelText() + ")";
+    }
 }

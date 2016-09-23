@@ -1,6 +1,7 @@
 package com.kit.tictactoe.cells;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 
 import static com.kit.tictactoe.Constants.CELL_HEIGHT;
@@ -16,9 +17,8 @@ public class Cell extends Label {
 
         setCellState(new EmptyCellState());
 
-        setPrefSize(CELL_WIDTH, CELL_HEIGHT);
         setMinSize(CELL_WIDTH, CELL_HEIGHT);
-        setMaxSize(CELL_WIDTH, CELL_HEIGHT);
+        setMaxSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
         setAlignment(Pos.CENTER);
 
