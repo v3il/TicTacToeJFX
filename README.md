@@ -1,3 +1,3 @@
 # TicTcToeJFX
 
-Проста гра "Крестики-нулики" на двох гравців, написана на Java FX
+A simple Tic-Tac-Toe game for two players written with Java FX
